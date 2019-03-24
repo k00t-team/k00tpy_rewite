@@ -48,6 +48,7 @@ async def on_ready():
     print(f'{bot.user}')
 
 
+
 #command handler start
 @bot.event
 async def on_message(message):
@@ -56,7 +57,7 @@ async def on_message(message):
     args = ' '.join(words[1:])
     if not message.author.bot:
         if command == f"{prefix}say":
-            message.channel.send(f"{words}")
+            await message.channel.send(str(words))
 #command handler end
 
 bot.run(token)
