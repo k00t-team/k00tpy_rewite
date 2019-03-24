@@ -16,16 +16,10 @@ from re import sub
 
 #config start
 try:
-    fh = open('config.ini', 'r').read()
-    config = configparser.ConfigParser()
-    config.sections()
-    config.read('config.ini')
-    config.sections()
-    config_j = open('config.json', 'r').read()
-    print(json.dumps(config_j))
+    config_j = json.load(open('config.json', 'r'))
     token = config_j['token']
     prefix = config_j['prefix']
-    ownerid = config['adminid']
+    ownerid = config_j['adminid']
     print(token)
 except FileNotFoundError:
     print('file config.ini are not found')
