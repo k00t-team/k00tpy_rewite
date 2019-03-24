@@ -4,6 +4,7 @@ import io
 import asyncio
 import discord
 import re
+import json
 import sys
 from discord.ext import commands
 from re import sub
@@ -20,14 +21,16 @@ try:
     config.sections()
     config.read('config.ini')
     config.sections()
-
-    token = config['CONFIG']['token']
-    prefix = config['CONFIG']['prefix']
-    ownerid = config['CONFIG']['adminid']
+    config_j = open('config.json', 'r').read()
+    print(json.dumps(config_j))
+    token = config_j['token']
+    prefix = config_j['prefix']
+    ownerid = config['adminid']
+    print(token)
 except FileNotFoundError:
     print('file config.ini are not found')
-    print('copy \"config_example.ini\" file and rename to config.ini')
-    print('and edit config.ini file')
+    print('copy \"config_example.json\" file and rename to config.json')
+    print('and edit config.json file')
     sys.exit()
 
 #config end
@@ -55,9 +58,6 @@ async def on_message(message):
     words = message.content.split(' ')
     command = words[0].lower()
     args = ' '.join(words[1:])
-    if not message.author.bot:
-        if command == f"{prefix}say":
-            await message.channel.send(str(words))
 #command handler end
 
 bot.run(token)
