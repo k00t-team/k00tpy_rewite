@@ -20,7 +20,6 @@ try:
     token = config_j['token']
     prefix = config_j['prefix']
     ownerid = config_j['adminid']
-    print(token)
 except FileNotFoundError:
     print('file config.ini are not found')
     print('copy \"config_example.json\" file and rename to config.json')
@@ -47,11 +46,14 @@ async def on_ready():
 
 
 #command handler start
-@bot.event
-async def on_message(message):
-    words = message.content.split(' ')
-    command = words[0].lower()
-    args = ' '.join(words[1:])
-#command handler end
 
-bot.run(token)
+extensions = ['cogs.fun', 'cogs.admin']
+if __name__ == '__main__':
+    for extension in extensions:
+        try:
+            bot.load_extension(extension)
+            print(f'{extension} loaded.')
+        except Exception as error:
+            print(f'{extension} cannot be loaded!\n{error}')#https://www.youtube.com/watch?v=gxKM6J5VmIc&list=PLW3GfRiBCHOiEkjvQj0uaUB1Q-RckYnj9&index=17
+#command handler end
+bot.run(token, bot=True, reconnect=True)
